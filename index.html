@@ -3,48 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IB DP CS: Network Topology Architect Lab</title>
+  <title>IB DP CS: Network Topology Architect Challenge</title>
   <style>
     :root {
-      --primary: #1e3a8a;
+      --primary: #0f172a;
       --accent: #2563eb;
       --bg: #f8fafc;
       --card: #ffffff;
       --text: #1e293b;
       --border: #cbd5e1;
-      --success: #16a34a;
-      --error: #dc2626;
+      --success-bg: #f0fdf4;
+      --success-border: #86efac;
+      --success-text: #166534;
+      --warn-bg: #fffbeb;
+      --warn-border: #fde047;
+      --warn-text: #854d0e;
     }
     * { box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
     body { background: var(--bg); color: var(--text); margin: 0; padding: 24px; line-height: 1.5; }
-    .container { max-width: 900px; margin: 0 auto; }
+    .container { max-width: 920px; margin: 0 auto; }
     header { background: var(--primary); color: white; padding: 20px 24px; border-radius: 10px; margin-bottom: 20px; }
-    header h1 { margin: 0 0 6px 0; font-size: 1.5rem; }
-    header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+    header h1 { margin: 0 0 6px 0; font-size: 1.45rem; }
+    header p { margin: 0; opacity: 0.85; font-size: 0.95rem; }
     .student-bar { background: var(--card); padding: 16px 20px; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 20px; display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .student-bar label { font-weight: 600; }
     .student-bar input { padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; flex: 1; min-width: 220px; }
-    .price-banner { background: #eff6ff; border-left: 4px solid var(--accent); padding: 12px 16px; margin-bottom: 20px; border-radius: 4px; font-size: 0.95rem; }
-    .sprint-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
-    .sprint-card h2 { margin-top: 0; color: var(--primary); border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; font-size: 1.25rem; }
-    .paper-task { background: #fefce8; border: 1px dashed #ca8a04; padding: 14px 16px; border-radius: 8px; margin-bottom: 16px; }
-    .paper-task strong { color: #854d0e; display: block; margin-bottom: 4px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-    .factor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 12px; }
+    .price-banner { background: #e2e8f0; border-left: 4px solid var(--primary); padding: 12px 16px; margin-bottom: 20px; border-radius: 4px; font-size: 0.95rem; }
+    .sprint-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom: 24px; }
+    .sprint-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e2e8f0; padding-bottom: 8px; margin-bottom: 16px; }
+    .sprint-header h2 { margin: 0; color: var(--primary); font-size: 1.2rem; }
+    .attempt-badge { font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: #e2e8f0; color: #334155; }
+    .paper-task { background: #fffbeb; border: 1px solid #fde68a; padding: 14px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.95rem; }
+    .paper-task strong { color: #92400e; display: block; margin-bottom: 6px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 16px; }
     .field { display: flex; flex-direction: column; gap: 4px; }
-    .field label { font-size: 0.85rem; font-weight: 600; color: #475569; }
-    .field input, .field select, .field textarea { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.95rem; background: white; }
-    .budget-status { font-weight: 700; padding: 10px 14px; border-radius: 6px; background: #f1f5f9; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-    .status-pass { color: var(--success); }
-    .status-fail { color: var(--error); }
-    .btn-export { background: var(--success); color: white; border: none; padding: 14px 28px; font-size: 1.05rem; font-weight: 700; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; }
-    .btn-export:hover { background: #15803d; }
-    .checklist-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px 20px; border-radius: 8px; margin-top: 20px; }
+    .field label { font-size: 0.85rem; font-weight: 600; color: #334155; }
+    .field input, .field select, .field textarea { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.92rem; background: white; }
+    .cost-readout { font-weight: 700; padding: 10px 14px; border-radius: 6px; background: #f1f5f9; margin-bottom: 16px; border: 1px solid #e2e8f0; }
+    table.eval-table { width: 100%; border-collapse: collapse; margin-top: 10px; margin-bottom: 16px; }
+    table.eval-table th, table.eval-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+    table.eval-table th { background: #f8fafc; font-size: 0.85rem; color: #475569; }
+    table.eval-table select, table.eval-table input { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9rem; }
+    .btn-check { background: var(--primary); color: white; border: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 600; border-radius: 6px; cursor: pointer; }
+    .btn-check:hover { background: #334155; }
+    .feedback-box { display: none; margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; }
+    .feedback-box.pass { display: block; background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
+    .feedback-box.hint { display: block; background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
+    .feedback-box ul { margin: 6px 0 0 0; padding-left: 20px; }
+    .btn-export { background: var(--accent); color: white; border: none; padding: 14px 28px; font-size: 1.05rem; font-weight: 700; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 12px; }
+    .btn-export:hover { background: #1d4ed8; }
+    .checklist-box { background: #f8fafc; border: 1px solid var(--border); padding: 16px 20px; border-radius: 8px; margin-top: 20px; }
     @media print {
-      body { background: white; padding: 0; font-size: 11pt; }
+      body { background: white; padding: 0; font-size: 10pt; }
       .no-print { display: none !important; }
-      .sprint-card { break-inside: avoid; border: 1px solid #94a3b8; box-shadow: none; margin-bottom: 14px; padding: 14px; }
-      header { background: white; color: black; border-bottom: 2px solid black; border-radius: 0; padding: 0 0 10px 0; }
+      .sprint-card { break-inside: avoid; border: 1px solid #94a3b8; margin-bottom: 12px; padding: 12px; }
+      header { background: white; color: black; border-bottom: 2px solid black; border-radius: 0; padding: 0 0 8px 0; }
     }
   </style>
 </head>
@@ -52,270 +65,343 @@
 
 <div class="container">
   <header>
-    <h1>IB DP Computer Science: Network Topology Architect Lab</h1>
-    <p>Solo Challenge — Star, Full Mesh &amp; Hybrid Evaluation Across the 5 Core Factors</p>
+    <h1>IB DP Computer Science: Network Topology Architect Challenge</h1>
+    <p>Independent Design &amp; 5-Factor Evaluation — Star, Full Mesh &amp; Hybrid</p>
   </header>
 
   <div class="student-bar">
-    <label for="studentName">Student Full Name:</label>
-    <input type="text" id="studentName" placeholder="Enter your name before exporting PDF...">
+    <label for="studentName">Student Name:</label>
+    <input type="text" id="studentName" placeholder="Enter your full name...">
     <span id="dateDisplay" style="font-size:0.9rem; color:#64748b;"></span>
   </div>
 
   <div class="price-banner">
-    <strong>Architect Hardware Price List:</strong> 
-    1 Cable = <strong>$100</strong> &nbsp;|&nbsp; 
-    1 Central Switch (isolated ports) = <strong>$300</strong> &nbsp;|&nbsp; 
-    1 Central Hub (shared bandwidth) = <strong>$50</strong>
+    <strong>Component Unit Prices:</strong> 
+    Cable Link = <strong>$100</strong> &nbsp;|&nbsp; 
+    Hub = <strong>$50</strong> &nbsp;|&nbsp; 
+    Switch = <strong>$300</strong>
   </div>
 
-  <!-- SPRINT 1: STAR -->
+  <!-- CASE 1: STAR -->
   <div class="sprint-card">
-    <h2>Sprint 1: The Switched Star Topology (6 End Nodes: A–F)</h2>
+    <div class="sprint-header">
+      <h2>Case 1: Star Topology (6 Workstations: A–F)</h2>
+      <span id="s1_badge" class="attempt-badge">Not Checked Yet</span>
+    </div>
     <div class="paper-task">
-      <strong>✏️ PAPER TASK 1 (Draw on Section 1 of your paper):</strong>
-      1. Draw 6 nodes (A–F) connected in a <strong>Star topology</strong> to a central Switch.<br>
-      2. Draw a lightning bolt (⚡) on the central Switch and write how many nodes can still communicate if it loses power.<br>
-      3. Draw a dashed line to a new 7th node (Node G) and label the cost to add it (<strong>+$100</strong>).
+      <strong>✏️ PAPER DIAGRAM 1 (Section 1 of your sheet):</strong>
+      1. Sketch a 6-workstation (A–F) Star topology that completely eliminates data collisions.<br>
+      2. Mark a hardware failure (⚡) on the central device and state on your paper how many workstations can still communicate.<br>
+      3. Add a 7th workstation (Node G) with a dashed line and write the exact cost of this expansion on your diagram.
     </div>
 
-    <div class="grid-2">
+    <div class="grid-3">
       <div class="field">
-        <label>Number of Cables Used (for 6 nodes):</label>
-        <input type="number" id="s1_cables" value="0" min="0" oninput="calcAll()">
+        <label>Cables Used (for 6 nodes):</label>
+        <input type="number" id="s1_cables" value="0" min="0" oninput="calcCosts()">
       </div>
       <div class="field">
-        <label>Central Device Selected:</label>
-        <select id="s1_device" onchange="calcAll()">
-          <option value="0">-- Choose Central Hardware --</option>
-          <option value="50">Central Hub ($50)</option>
-          <option value="300">Central Switch ($300)</option>
+        <label>Central Hardware Selected:</label>
+        <select id="s1_device" onchange="calcCosts()">
+          <option value="0">None ($0)</option>
+          <option value="50">Hub ($50)</option>
+          <option value="300">Switch ($300)</option>
         </select>
+      </div>
+      <div class="field">
+        <label>Cost to Add 7th Node (Node G) ($):</label>
+        <input type="number" id="s1_scale_cost" value="0" min="0">
       </div>
     </div>
 
-    <div class="budget-status">
-      <span>Total Build Cost: <span id="s1_cost">$0</span> (Target: $900 for zero collisions)</span>
-      <span id="s1_check" class="status-fail">Incomplete</span>
-    </div>
+    <div class="cost-readout">Calculated Initial Build Cost: <span id="s1_cost">$0</span></div>
 
-    <strong>Evaluate Star (Switched) on the 5 Factors:</strong>
-    <div class="factor-grid">
-      <div class="field">
-        <label>1. Reliability (Fault Tolerance):</label>
-        <select id="s1_rel">
-          <option value="">-- Select --</option>
-          <option value="Medium (Single cable failure is isolated, but central switch is a SPOF)">Medium (Switch is a Single Point of Failure)</option>
-          <option value="Very High (Multiple redundant paths between all nodes)">Very High (Multiple redundant paths)</option>
-          <option value="Low (One outer cable break halts the whole network)">Low (One outer cable break halts all)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>2. Transmission Speed:</label>
-        <select id="s1_spd">
-          <option value="">-- Select --</option>
-          <option value="High (2 hops via switch with dedicated port bandwidth)">High (2 hops via switch, dedicated bandwidth)</option>
-          <option value="Low (Packets must pass through every node sequentially)">Low (Sequential pass-through)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>3. Scalability (Adding Node G):</label>
-        <select id="s1_scl">
-          <option value="">-- Select --</option>
-          <option value="High (Only requires 1 new cable into an open switch port)">High (1 new cable into switch port)</option>
-          <option value="Very Poor (Requires n new cables to every existing node)">Very Poor (Requires n new cables)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>4. Data Collisions (Switch vs. Hub):</label>
-        <select id="s1_col">
-          <option value="">-- Select --</option>
-          <option value="None/Very Low with a Switch (each port is its own collision domain)">None/Very Low (Switch isolates each port)</option>
-          <option value="Very High with a Switch (all nodes share one cable)">Very High (Switch broadcasts everything)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>5. Cost:</label>
-        <select id="s1_cst">
-          <option value="">-- Select --</option>
-          <option value="Medium (n cables + cost of central switch)">Medium (n cables + central switch)</option>
-          <option value="Very High (n(n-1)/2 cables and n-1 ports per node)">Very High (Exponential cabling)</option>
-        </select>
-      </div>
-    </div>
+    <table class="eval-table">
+      <thead>
+        <tr>
+          <th style="width:22%;">Factor</th>
+          <th style="width:25%;">Rating</th>
+          <th>Technical Justification (Why?)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Reliability</strong></td>
+          <td><select id="s1_r_rel"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s1_j_rel" placeholder="Explain what happens if a cable vs. central device fails..."></td>
+        </tr>
+        <tr>
+          <td><strong>Transmission Speed</strong></td>
+          <td><select id="s1_r_spd"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s1_j_spd" placeholder="Explain hop count and bandwidth allocation..."></td>
+        </tr>
+        <tr>
+          <td><strong>Scalability</strong></td>
+          <td><select id="s1_r_scl"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s1_j_scl" placeholder="Explain how new nodes are added and any limits..."></td>
+        </tr>
+        <tr>
+          <td><strong>Data Collisions</strong></td>
+          <td><select id="s1_r_col"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s1_j_col" placeholder="Compare your chosen central device against the alternative..."></td>
+        </tr>
+        <tr>
+          <td><strong>Cost</strong></td>
+          <td><select id="s1_r_cst"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s1_j_cst" placeholder="Justify based on cable count and central hardware..."></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-check no-print" onclick="checkCase1()">🔍 Check Case 1</button>
+    <div id="s1_feedback" class="feedback-box"></div>
   </div>
 
-  <!-- SPRINT 2: FULL MESH -->
+  <!-- CASE 2: FULL MESH -->
   <div class="sprint-card">
-    <h2>Sprint 2: The "Unbreakable Bunker" Full Mesh (6 End Nodes: A–F)</h2>
+    <div class="sprint-header">
+      <h2>Case 2: Full Mesh Topology (6 Workstations: A–F)</h2>
+      <span id="s2_badge" class="attempt-badge">Not Checked Yet</span>
+    </div>
     <div class="paper-task">
-      <strong>✏️ PAPER TASK 2 (Draw on Section 2 of your paper):</strong>
-      1. Draw 6 nodes (A–F) in a circle with <strong>no central switch</strong>. Connect every node directly to every other node (<strong>1-hop max</strong>).<br>
-      2. Draw <strong>3 scissor cuts (✂️)</strong> across any 3 cables on your drawing. Highlight in pen a valid path from Node A to Node D that bypasses the cuts.<br>
-      3. Write the formula <code>n(n-1)/2</code> next to your drawing and calculate how many <em>new</em> cables adding Node G would require.
+      <strong>✏️ PAPER DIAGRAM 2 (Section 2 of your sheet):</strong>
+      1. Sketch a 6-workstation (A–F) Full Mesh topology where every node can reach any other node in 1 direct hop.<br>
+      2. Mark 3 cable cuts (✂️) on your diagram and highlight a functional backup path between two affected nodes.<br>
+      3. Write the mathematical formula for total cables on your paper, and show the new connections required if a 7th node (Node G) joins.
     </div>
 
-    <div class="grid-2">
+    <div class="grid-3">
       <div class="field">
-        <label>Total Cables for 6-Node Full Mesh (n(n-1)/2):</label>
-        <input type="number" id="s2_cables" value="0" min="0" oninput="calcAll()">
+        <label>Total Cables Used (for 6 nodes):</label>
+        <input type="number" id="s2_cables" value="0" min="0" oninput="calcCosts()">
       </div>
       <div class="field">
-        <label>New Cables Required to Add a 7th Node (Node G):</label>
-        <input type="number" id="s2_newcables" value="0" min="0" oninput="calcAll()">
+        <label>NIC Ports Required per Node:</label>
+        <input type="number" id="s2_ports" value="0" min="0">
+      </div>
+      <div class="field">
+        <label>Additional Cables Needed for Node G:</label>
+        <input type="number" id="s2_newcables" value="0" min="0">
       </div>
     </div>
 
-    <div class="budget-status">
-      <span>Total Build Cost: <span id="s2_cost">$0</span> (Target: 15 cables = $1,500 | +6 cables for Node G)</span>
-      <span id="s2_check" class="status-fail">Incomplete</span>
-    </div>
+    <div class="cost-readout">Calculated Initial Build Cost: <span id="s2_cost">$0</span></div>
 
-    <strong>Evaluate Full Mesh on the 5 Factors:</strong>
-    <div class="factor-grid">
-      <div class="field">
-        <label>1. Reliability (Fault Tolerance):</label>
-        <select id="s2_rel">
-          <option value="">-- Select --</option>
-          <option value="Very High (Multiple redundant paths survive multiple cable cuts)">Very High (Survives multiple cable cuts)</option>
-          <option value="Low (Single point of failure in the center)">Low (Central single point of failure)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>2. Transmission Speed:</label>
-        <select id="s2_spd">
-          <option value="">-- Select --</option>
-          <option value="Very High (Direct 1-hop dedicated connection between any two nodes)">Very High (Direct 1-hop dedicated links)</option>
-          <option value="Low (High latency due to central bottleneck)">Low (Central bottleneck latency)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>3. Scalability:</label>
-        <select id="s2_scl">
-          <option value="">-- Select --</option>
-          <option value="Very Poor (Adding 1 node requires n new cables and extra NIC ports)">Very Poor (Exponential cable & port growth)</option>
-          <option value="High (Just plug 1 cable into the nearest node)">High (1 cable per new node)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>4. Data Collisions:</label>
-        <select id="s2_col">
-          <option value="">-- Select --</option>
-          <option value="None (Dedicated point-to-point links between every pair)">None (Dedicated point-to-point links)</option>
-          <option value="High (All nodes contend for the same ring token)">High (Shared medium contention)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>5. Cost:</label>
-        <select id="s2_cst">
-          <option value="">-- Select --</option>
-          <option value="Very High (Maximum cabling volume and NIC ports per device)">Very High (Maximum cabling & NIC ports)</option>
-          <option value="Low (Minimal cabling required)">Low (Minimal cabling required)</option>
-        </select>
-      </div>
-    </div>
+    <table class="eval-table">
+      <thead>
+        <tr>
+          <th style="width:22%;">Factor</th>
+          <th style="width:25%;">Rating</th>
+          <th>Technical Justification (Why?)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Reliability</strong></td>
+          <td><select id="s2_r_rel"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s2_j_rel" placeholder="Explain impact of the 3 cable cuts on network connectivity..."></td>
+        </tr>
+        <tr>
+          <td><strong>Transmission Speed</strong></td>
+          <td><select id="s2_r_spd"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s2_j_spd" placeholder="Explain hop count and link dedication..."></td>
+        </tr>
+        <tr>
+          <td><strong>Scalability</strong></td>
+          <td><select id="s2_r_scl"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s2_j_scl" placeholder="Explain the cabling and port impact of adding Node G..."></td>
+        </tr>
+        <tr>
+          <td><strong>Data Collisions</strong></td>
+          <td><select id="s2_r_col"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s2_j_col" placeholder="Explain whether links are shared or dedicated..."></td>
+        </tr>
+        <tr>
+          <td><strong>Cost</strong></td>
+          <td><select id="s2_r_cst"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><input type="text" id="s2_j_cst" placeholder="Justify using your formula and port count..."></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn-check no-print" onclick="checkCase2()">🔍 Check Case 2</button>
+    <div id="s2_feedback" class="feedback-box"></div>
   </div>
 
-  <!-- SPRINT 3: HYBRID BOSS LEVEL -->
+  <!-- CASE 3: HYBRID -->
   <div class="sprint-card">
-    <h2>Sprint 3: Boss Level — The Hybrid Campus Design (8 End Nodes + Core)</h2>
+    <div class="sprint-header">
+      <h2>Case 3: Hybrid Architecture Challenge (8 Workstations: Dept 1 [A–D] &amp; Dept 2 [E–H])</h2>
+      <span id="s3_badge" class="attempt-badge">Not Checked Yet</span>
+    </div>
     <div class="paper-task">
-      <strong>✏️ PAPER TASK 3 (Draw on Section 3 of your paper):</strong>
-      Design a network for <strong>8 workstations</strong> (Dept 1: Nodes A–D, Dept 2: Nodes E–H) under a <strong>strict $1,800 budget</strong> that meets all 3 rules:<br>
-      • <strong>Rule 1 (Zero Collisions &amp; Easy Scaling):</strong> Connecting a new workstation in either department must cost only $100 (1 cable).<br>
-      • <strong>Rule 2 (Fault-Tolerant Core):</strong> If <strong>1 inter-department cable</strong> is cut (draw ✂️ on it), Dept 1 and Dept 2 must STILL be able to communicate!
+      <strong>✏️ PAPER DIAGRAM 3 (Section 3 of your sheet):</strong>
+      Design and sketch a Hybrid network connecting 8 workstations split into two departments (A–D and E–H) that satisfies ALL four client constraints:<br>
+      • <strong>Constraint 1:</strong> Total build cost must not exceed <strong>$1,800</strong>.<br>
+      • <strong>Constraint 2:</strong> Zero data collisions are permitted anywhere on the network.<br>
+      • <strong>Constraint 3:</strong> Adding a future workstation to either department must cost no more than <strong>$100</strong>.<br>
+      • <strong>Constraint 4:</strong> If any single inter-departmental cable is severed (mark with ✂️), both departments must remain connected.
     </div>
 
-    <div class="grid-2">
+    <div class="grid-3">
       <div class="field">
-        <label>Number of Switches Used ($300 each):</label>
-        <input type="number" id="s3_switches" value="0" min="0" oninput="calcAll()">
+        <label>Number of Hubs ($50 each):</label>
+        <input type="number" id="s3_hubs" value="0" min="0" oninput="calcCosts()">
       </div>
       <div class="field">
-        <label>Total Cables Used (End-node cables + Core links):</label>
-        <input type="number" id="s3_cables" value="0" min="0" oninput="calcAll()">
+        <label>Number of Switches ($300 each):</label>
+        <input type="number" id="s3_switches" value="0" min="0" oninput="calcCosts()">
+      </div>
+      <div class="field">
+        <label>Total Cables Used:</label>
+        <input type="number" id="s3_cables" value="0" min="0" oninput="calcCosts()">
       </div>
     </div>
 
-    <div class="budget-status">
-      <span>Total Hybrid Cost: <span id="s3_cost">$0</span> (Max Budget: $1,800 | Recommended: 2 Switches + 10 Cables = $1,600)</span>
-      <span id="s3_check" class="status-fail">Incomplete</span>
+    <div class="cost-readout">Calculated Hybrid Build Cost: <span id="s3_cost">$0</span></div>
+
+    <div class="field" style="margin-top: 12px; margin-bottom: 16px;">
+      <label>Architectural Defense (Specify which topologies you combined and prove how your design meets all 4 constraints across the 5 factors):</label>
+      <textarea id="s3_justify" rows="4" placeholder="Write your full technical justification here..."></textarea>
     </div>
 
-    <div class="field" style="margin-top: 12px;">
-      <label>Justify your Hybrid Architecture (How does it balance the 5 factors better than pure Star or pure Mesh?):</label>
-      <textarea id="s3_justify" rows="3" placeholder="Explain how the Star edges provide scalability/low cost while the redundant core links provide reliability..."></textarea>
-    </div>
+    <button class="btn-check no-print" onclick="checkCase3()">🔍 Check Case 3</button>
+    <div id="s3_feedback" class="feedback-box"></div>
   </div>
 
   <div class="checklist-box no-print">
-    <strong>📋 Final Submission Instructions (Upload 2 Files):</strong>
+    <strong>📋 Submission Protocol (2 Files Required):</strong>
     <ol style="margin: 8px 0 0 0; padding-left: 20px;">
-      <li>Click the green button below and select <strong>"Save as PDF"</strong> as your destination printer to download your completed report.</li>
-      <li>Take a clear photo of your <strong>3 hand-drawn paper topologies</strong> (showing your ⚡ and ✂️ stress-test annotations).</li>
-      <li>Upload <strong>both files</strong> (the PDF + the photo of your paperwork) to the assignment dropbox.</li>
+      <li>Use the <strong>Check Case</strong> buttons above to verify your designs.</li>
+      <li>Click the blue button below and choose <strong>"Save as PDF"</strong> to generate your response sheet.</li>
+      <li>Photograph your hand-drawn paper sheet showing all three diagrams, formulas, and failure annotations (⚡ / ✂️).</li>
+      <li>Upload both the <strong>PDF</strong> and the <strong>photo</strong> to the assignment submission folder.</li>
     </ol>
-    <button class="btn-export" onclick="exportPDF()">📄 Export Official PDF Report</button>
+    <button class="btn-export" onclick="exportPDF()">📄 Export Assessment PDF</button>
   </div>
 </div>
 
 <script>
   document.getElementById('dateDisplay').textContent = "Date: " + new Date().toLocaleDateString();
+  let attempts = { c1: 0, c2: 0, c3: 0 };
 
-  function calcAll() {
-    // Sprint 1
+  function calcCosts() {
     const s1Cables = parseInt(document.getElementById('s1_cables').value) || 0;
     const s1Dev = parseInt(document.getElementById('s1_device').value) || 0;
-    const s1Total = (s1Cables * 100) + s1Dev;
-    document.getElementById('s1_cost').textContent = "$" + s1Total;
-    const s1Check = document.getElementById('s1_check');
-    if (s1Cables === 6 && s1Dev === 300) {
-      s1Check.textContent = "✓ Valid Switched Star ($900)";
-      s1Check.className = "status-pass";
-    } else if (s1Cables === 6 && s1Dev === 50) {
-      s1Check.textContent = "⚠ Hub causes collisions! Upgrade to Switch.";
-      s1Check.className = "status-fail";
-    } else {
-      s1Check.textContent = "Requires 6 cables + 1 Switch";
-      s1Check.className = "status-fail";
-    }
+    document.getElementById('s1_cost').textContent = "$" + ((s1Cables * 100) + s1Dev);
 
-    // Sprint 2
     const s2Cables = parseInt(document.getElementById('s2_cables').value) || 0;
-    const s2New = parseInt(document.getElementById('s2_newcables').value) || 0;
-    const s2Total = s2Cables * 100;
-    document.getElementById('s2_cost').textContent = "$" + s2Total;
-    const s2Check = document.getElementById('s2_check');
-    if (s2Cables === 15 && s2New === 6) {
-      s2Check.textContent = "✓ Valid 6-Node Full Mesh ($1,500)";
-      s2Check.className = "status-pass";
-    } else {
-      s2Check.textContent = "Check n(n-1)/2 for n=6 and new links for n=7";
-      s2Check.className = "status-fail";
-    }
+    document.getElementById('s2_cost').textContent = "$" + (s2Cables * 100);
 
-    // Sprint 3
+    const s3Hubs = parseInt(document.getElementById('s3_hubs').value) || 0;
     const s3Sw = parseInt(document.getElementById('s3_switches').value) || 0;
     const s3Cab = parseInt(document.getElementById('s3_cables').value) || 0;
-    const s3Total = (s3Sw * 300) + (s3Cab * 100);
-    document.getElementById('s3_cost').textContent = "$" + s3Total;
-    const s3Check = document.getElementById('s3_check');
-    if (s3Sw >= 2 && s3Cab >= 10 && s3Total <= 1800) {
-      s3Check.textContent = "✓ Valid Redundant Hybrid (Under $1,800 Budget!)";
-      s3Check.className = "status-pass";
-    } else if (s3Total > 1800) {
-      s3Check.textContent = "✗ Over Budget ($" + s3Total + " > $1,800)";
-      s3Check.className = "status-fail";
+    document.getElementById('s3_cost').textContent = "$" + ((s3Hubs * 50) + (s3Sw * 300) + (s3Cab * 100));
+  }
+
+  function renderFeedback(boxId, badgeId, attemptCount, hints) {
+    const box = document.getElementById(boxId);
+    const badge = document.getElementById(badgeId);
+    if (hints.length === 0) {
+      box.className = "feedback-box pass";
+      box.innerHTML = "<strong>✓ Design & 5-Factor Ratings Verified!</strong> Make sure your paper diagram and written justifications clearly explain why.";
+      badge.textContent = "✓ Verified (Attempt #" + attemptCount + ")";
+      badge.style.background = "#dcfce7";
+      badge.style.color = "#166534";
     } else {
-      s3Check.textContent = "Needs >=2 Switches & >=10 Cables (8 nodes + 2 redundant core links)";
-      s3Check.className = "status-fail";
+      box.className = "feedback-box hint";
+      box.innerHTML = "<strong>💡 Not quite right yet — review these hints:</strong><ul>" + hints.map(h => "<li>" + h + "</li>").join("") + "</ul>";
+      badge.textContent = "In Progress (" + attemptCount + " checks)";
+      badge.style.background = "#fef9c3";
+      badge.style.color = "#854d0e";
     }
+  }
+
+  function checkCase1() {
+    attempts.c1++;
+    let hints = [];
+    const cables = parseInt(document.getElementById('s1_cables').value) || 0;
+    const dev = parseInt(document.getElementById('s1_device').value) || 0;
+    const scaleCost = parseInt(document.getElementById('s1_scale_cost').value) || 0;
+
+    if (cables !== 6) hints.push("<strong>Cables:</strong> In a Star topology, every workstation connects directly to the central device with its own dedicated line. Count how many lines 6 workstations need.");
+    if (dev === 0) hints.push("<strong>Central Hardware:</strong> A Star topology requires a central connecting device in the middle.");
+    if (dev === 50) hints.push("<strong>Central Hardware Trap:</strong> A Hub shares bandwidth and broadcasts signals to all ports, causing collisions! Re-read Requirement #1.");
+    if (scaleCost !== 100) hints.push("<strong>Expansion Cost (Node G):</strong> Assuming your central device already has an open port, how many new cables do you need to plug in one additional workstation?");
+
+    const rRel = document.getElementById('s1_r_rel').value;
+    const rSpd = document.getElementById('s1_r_spd').value;
+    const rScl = document.getElementById('s1_r_scl').value;
+    const rCol = document.getElementById('s1_r_col').value;
+    const rCst = document.getElementById('s1_r_cst').value;
+
+    if (!["Medium", "High"].includes(rRel)) hints.push("<strong>Reliability Rating:</strong> One outer cable breaking only affects 1 node, BUT what happens if the central device fails? It's neither the lowest nor the highest reliability.");
+    if (!["High", "Very High"].includes(rSpd)) hints.push("<strong>Speed Rating:</strong> With dedicated switch ports and only 2 hops between any two nodes, how fast is traffic delivery?");
+    if (!["High", "Very High"].includes(rScl)) hints.push("<strong>Scalability Rating:</strong> Think about how easy it was to add Node G on your paper diagram.");
+    if (rCol !== "Very Low / None") hints.push("<strong>Data Collisions Rating:</strong> When using a Switch instead of a Hub, each port is its own isolated collision domain.");
+    if (rCst !== "Medium") hints.push("<strong>Cost Rating:</strong> Compare this build against a cheap single-cable Bus and an expensive multi-cable Mesh.");
+
+    const justInputs = ['s1_j_rel','s1_j_spd','s1_j_scl','s1_j_col','s1_j_cst'];
+    if (justInputs.some(id => document.getElementById(id).value.trim().length < 10)) {
+      hints.push("<strong>Technical Justifications:</strong> Make sure all 5 "Why?" text boxes have a complete explanation.");
+    }
+
+    renderFeedback('s1_feedback', 's1_badge', attempts.c1, hints);
+  }
+
+  function checkCase2() {
+    attempts.c2++;
+    let hints = [];
+    const cables = parseInt(document.getElementById('s2_cables').value) || 0;
+    const ports = parseInt(document.getElementById('s2_ports').value) || 0;
+    const newCables = parseInt(document.getElementById('s2_newcables').value) || 0;
+
+    if (cables !== 15) hints.push("<strong>Total Cables:</strong> Each of the 6 nodes must connect to the other 5 nodes, without double-counting links (A-to-B is the same cable as B-to-A). Check your paper drawing!");
+    if (ports !== 5) hints.push("<strong>NIC Ports per Node:</strong> Look at just ONE workstation on your diagram. How many cables are plugged directly into it?");
+    if (newCables !== 6) hints.push("<strong>Adding Node G:</strong> To maintain a Full Mesh, the 7th workstation must connect directly to every existing workstation on the network.");
+
+    const rRel = document.getElementById('s2_r_rel').value;
+    const rSpd = document.getElementById('s2_r_spd').value;
+    const rScl = document.getElementById('s2_r_scl').value;
+    const rCol = document.getElementById('s2_r_col').value;
+    const rCst = document.getElementById('s2_r_cst').value;
+
+    if (rRel !== "Very High") hints.push("<strong>Reliability Rating:</strong> Even after cutting 3 cables on your diagram, could nodes still reroute traffic?");
+    if (!["High", "Very High"].includes(rSpd)) hints.push("<strong>Speed Rating:</strong> Every pair of nodes has a direct, 1-hop dedicated connection.");
+    if (!["Very Low / None", "Low"].includes(rScl)) hints.push("<strong>Scalability Rating:</strong> Look at how many new cables and extra NIC ports are required every time a single new person joins.");
+    if (rCol !== "Very Low / None") hints.push("<strong>Data Collisions Rating:</strong> Are any cables shared between multiple pairs, or is every link dedicated point-to-point?");
+    if (rCst !== "Very High") hints.push("<strong>Cost Rating:</strong> Compare the number of cables and NIC ports here against every other topology.");
+
+    const justInputs = ['s2_j_rel','s2_j_spd','s2_j_scl','s2_j_col','s2_j_cst'];
+    if (justInputs.some(id => document.getElementById(id).value.trim().length < 10)) {
+      hints.push("<strong>Technical Justifications:</strong> Complete all 5 "Why?" explanation boxes before finalizing.");
+    }
+
+    renderFeedback('s2_feedback', 's2_badge', attempts.c2, hints);
+  }
+
+  function checkCase3() {
+    attempts.c3++;
+    let hints = [];
+    const hubs = parseInt(document.getElementById('s3_hubs').value) || 0;
+    const sw = parseInt(document.getElementById('s3_switches').value) || 0;
+    const cab = parseInt(document.getElementById('s3_cables').value) || 0;
+    const total = (hubs * 50) + (sw * 300) + (cab * 100);
+    const justify = document.getElementById('s3_justify').value.trim();
+
+    if (hubs > 0) hints.push("<strong>Constraint 2 Violation (Collisions):</strong> You included a Hub! Remember what Hubs do to collision domains.");
+    if (sw < 2) hints.push("<strong>Department Structure:</strong> You have two separate departments (A–D and E–H) that each need easy $100 scalability and zero collisions.");
+    if (cab < 10) hints.push("<strong>Constraint 4 Violation (Fault Tolerance):</strong> You need 8 cables just to connect the 8 workstations to their department switches. How many inter-department cables between switches do you need so that cutting ONE (✂️) doesn't disconnect the departments?");
+    if (total > 1800) hints.push("<strong>Constraint 1 Violation (Budget):</strong> Your total is $" + total + ", which exceeds the $1,800 limit. Can you achieve core redundancy with fewer switches or cables?");
+    if (justify.length < 30) hints.push("<strong>Architectural Defense:</strong> Write a clear explanation naming the topologies you combined and explaining how all 4 constraints are met.");
+
+    renderFeedback('s3_feedback', 's3_badge', attempts.c3, hints);
   }
 
   function exportPDF() {
     const name = document.getElementById('studentName').value.trim();
     if (!name) {
-      alert("Please enter your full name at the top of the page before exporting your PDF.");
+      alert("Please enter your full name before exporting your PDF.");
       document.getElementById('studentName').focus();
       return;
     }
