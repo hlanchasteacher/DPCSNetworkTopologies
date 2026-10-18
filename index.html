@@ -44,15 +44,18 @@
     table.eval-table th, table.eval-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
     table.eval-table th { background: #f8fafc; font-size: 0.85rem; color: #475569; }
     table.eval-table select, table.eval-table input { width: 100%; padding: 6px 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 0.9rem; }
-    .btn-check { background: var(--primary); color: white; border: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 600; border-radius: 6px; cursor: pointer; }
+    .btn-check { background: var(--primary); color: white; border: none; padding: 10px 18px; font-size: 0.95rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
     .btn-check:hover { background: #334155; }
+    .btn-check:active { transform: translateY(1px); }
     .feedback-box { display: none; margin-top: 14px; padding: 12px 16px; border-radius: 8px; font-size: 0.92rem; }
     .feedback-box.pass { display: block; background: var(--success-bg); border: 1px solid var(--success-border); color: var(--success-text); }
     .feedback-box.hint { display: block; background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
     .feedback-box ul { margin: 6px 0 0 0; padding-left: 20px; }
+    .feedback-box li { margin-bottom: 4px; }
     .btn-export { background: var(--accent); color: white; border: none; padding: 14px 28px; font-size: 1.05rem; font-weight: 700; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 12px; }
     .btn-export:hover { background: #1d4ed8; }
     .checklist-box { background: #f8fafc; border: 1px solid var(--border); padding: 16px 20px; border-radius: 8px; margin-top: 20px; }
+    .input-error { border: 2px solid #dc2626 !important; background: #fef2f2 !important; }
     @media print {
       body { background: white; padding: 0; font-size: 10pt; }
       .no-print { display: none !important; }
@@ -127,33 +130,33 @@
       <tbody>
         <tr>
           <td><strong>Reliability</strong></td>
-          <td><select id="s1_r_rel"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s1_r_rel"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s1_j_rel" placeholder="Explain what happens if a cable vs. central device fails..."></td>
         </tr>
         <tr>
           <td><strong>Transmission Speed</strong></td>
-          <td><select id="s1_r_spd"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s1_r_spd"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s1_j_spd" placeholder="Explain hop count and bandwidth allocation..."></td>
         </tr>
         <tr>
           <td><strong>Scalability</strong></td>
-          <td><select id="s1_r_scl"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s1_r_scl"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s1_j_scl" placeholder="Explain how new nodes are added and any limits..."></td>
         </tr>
         <tr>
           <td><strong>Data Collisions</strong></td>
-          <td><select id="s1_r_col"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s1_r_col"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s1_j_col" placeholder="Compare your chosen central device against the alternative..."></td>
         </tr>
         <tr>
           <td><strong>Cost</strong></td>
-          <td><select id="s1_r_cst"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s1_r_cst"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s1_j_cst" placeholder="Justify based on cable count and central hardware..."></td>
         </tr>
       </tbody>
     </table>
 
-    <button class="btn-check no-print" onclick="checkCase1()">🔍 Check Case 1</button>
+    <button type="button" class="btn-check no-print" onclick="checkCase1()">🔍 Check Case 1</button>
     <div id="s1_feedback" class="feedback-box"></div>
   </div>
 
@@ -198,33 +201,33 @@
       <tbody>
         <tr>
           <td><strong>Reliability</strong></td>
-          <td><select id="s2_r_rel"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s2_r_rel"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s2_j_rel" placeholder="Explain impact of the 3 cable cuts on network connectivity..."></td>
         </tr>
         <tr>
           <td><strong>Transmission Speed</strong></td>
-          <td><select id="s2_r_spd"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s2_r_spd"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s2_j_spd" placeholder="Explain hop count and link dedication..."></td>
         </tr>
         <tr>
           <td><strong>Scalability</strong></td>
-          <td><select id="s2_r_scl"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s2_r_scl"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s2_j_scl" placeholder="Explain the cabling and port impact of adding Node G..."></td>
         </tr>
         <tr>
           <td><strong>Data Collisions</strong></td>
-          <td><select id="s2_r_col"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s2_r_col"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s2_j_col" placeholder="Explain whether links are shared or dedicated..."></td>
         </tr>
         <tr>
           <td><strong>Cost</strong></td>
-          <td><select id="s2_r_cst"><option value="">-- Rate --</option><option>Very Low / None</option><option>Low</option><option>Medium</option><option>High</option><option>Very High</option></select></td>
+          <td><select id="s2_r_cst"><option value="">-- Rate --</option><option value="Very Low / None">Very Low / None</option><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option><option value="Very High">Very High</option></select></td>
           <td><input type="text" id="s2_j_cst" placeholder="Justify using your formula and port count..."></td>
         </tr>
       </tbody>
     </table>
 
-    <button class="btn-check no-print" onclick="checkCase2()">🔍 Check Case 2</button>
+    <button type="button" class="btn-check no-print" onclick="checkCase2()">🔍 Check Case 2</button>
     <div id="s2_feedback" class="feedback-box"></div>
   </div>
 
@@ -265,7 +268,7 @@
       <textarea id="s3_justify" rows="4" placeholder="Write your full technical justification here..."></textarea>
     </div>
 
-    <button class="btn-check no-print" onclick="checkCase3()">🔍 Check Case 3</button>
+    <button type="button" class="btn-check no-print" onclick="checkCase3()">🔍 Check Case 3</button>
     <div id="s3_feedback" class="feedback-box"></div>
   </div>
 
@@ -277,40 +280,44 @@
       <li>Photograph your hand-drawn paper sheet showing all three diagrams, formulas, and failure annotations (⚡ / ✂️).</li>
       <li>Upload both the <strong>PDF</strong> and the <strong>photo</strong> to the assignment submission folder.</li>
     </ol>
-    <button class="btn-export" onclick="exportPDF()">📄 Export Assessment PDF</button>
+    <button type="button" class="btn-export" onclick="exportPDF()">📄 Export Assessment PDF</button>
   </div>
 </div>
 
 <script>
   document.getElementById('dateDisplay').textContent = "Date: " + new Date().toLocaleDateString();
-  let attempts = { c1: 0, c2: 0, c3: 0 };
+  var attempts = { c1: 0, c2: 0, c3: 0 };
 
   function calcCosts() {
-    const s1Cables = parseInt(document.getElementById('s1_cables').value) || 0;
-    const s1Dev = parseInt(document.getElementById('s1_device').value) || 0;
+    var s1Cables = parseInt(document.getElementById('s1_cables').value, 10) || 0;
+    var s1Dev = parseInt(document.getElementById('s1_device').value, 10) || 0;
     document.getElementById('s1_cost').textContent = "$" + ((s1Cables * 100) + s1Dev);
 
-    const s2Cables = parseInt(document.getElementById('s2_cables').value) || 0;
+    var s2Cables = parseInt(document.getElementById('s2_cables').value, 10) || 0;
     document.getElementById('s2_cost').textContent = "$" + (s2Cables * 100);
 
-    const s3Hubs = parseInt(document.getElementById('s3_hubs').value) || 0;
-    const s3Sw = parseInt(document.getElementById('s3_switches').value) || 0;
-    const s3Cab = parseInt(document.getElementById('s3_cables').value) || 0;
+    var s3Hubs = parseInt(document.getElementById('s3_hubs').value, 10) || 0;
+    var s3Sw = parseInt(document.getElementById('s3_switches').value, 10) || 0;
+    var s3Cab = parseInt(document.getElementById('s3_cables').value, 10) || 0;
     document.getElementById('s3_cost').textContent = "$" + ((s3Hubs * 50) + (s3Sw * 300) + (s3Cab * 100));
   }
 
   function renderFeedback(boxId, badgeId, attemptCount, hints) {
-    const box = document.getElementById(boxId);
-    const badge = document.getElementById(badgeId);
+    var box = document.getElementById(boxId);
+    var badge = document.getElementById(badgeId);
     if (hints.length === 0) {
       box.className = "feedback-box pass";
-      box.innerHTML = "<strong>✓ Design & 5-Factor Ratings Verified!</strong> Make sure your paper diagram and written justifications clearly explain why.";
+      box.innerHTML = "<strong>✓ Design &amp; 5-Factor Ratings Verified!</strong> Make sure your paper diagram and written justifications clearly explain why.";
       badge.textContent = "✓ Verified (Attempt #" + attemptCount + ")";
       badge.style.background = "#dcfce7";
       badge.style.color = "#166534";
     } else {
       box.className = "feedback-box hint";
-      box.innerHTML = "<strong>💡 Not quite right yet — review these hints:</strong><ul>" + hints.map(h => "<li>" + h + "</li>").join("") + "</ul>";
+      var listHtml = "";
+      for (var i = 0; i < hints.length; i++) {
+        listHtml += "<li>" + hints[i] + "</li>";
+      }
+      box.innerHTML = "<strong>💡 Not quite right yet — review these hints:</strong><ul>" + listHtml + "</ul>";
       badge.textContent = "In Progress (" + attemptCount + " checks)";
       badge.style.background = "#fef9c3";
       badge.style.color = "#854d0e";
@@ -319,31 +326,54 @@
 
   function checkCase1() {
     attempts.c1++;
-    let hints = [];
-    const cables = parseInt(document.getElementById('s1_cables').value) || 0;
-    const dev = parseInt(document.getElementById('s1_device').value) || 0;
-    const scaleCost = parseInt(document.getElementById('s1_scale_cost').value) || 0;
+    var hints = [];
+    var cables = parseInt(document.getElementById('s1_cables').value, 10) || 0;
+    var dev = parseInt(document.getElementById('s1_device').value, 10) || 0;
+    var scaleCost = parseInt(document.getElementById('s1_scale_cost').value, 10) || 0;
 
-    if (cables !== 6) hints.push("<strong>Cables:</strong> In a Star topology, every workstation connects directly to the central device with its own dedicated line. Count how many lines 6 workstations need.");
-    if (dev === 0) hints.push("<strong>Central Hardware:</strong> A Star topology requires a central connecting device in the middle.");
-    if (dev === 50) hints.push("<strong>Central Hardware Trap:</strong> A Hub shares bandwidth and broadcasts signals to all ports, causing collisions! Re-read Requirement #1.");
-    if (scaleCost !== 100) hints.push("<strong>Expansion Cost (Node G):</strong> Assuming your central device already has an open port, how many new cables do you need to plug in one additional workstation?");
+    if (cables !== 6) {
+      hints.push("<strong>Cables:</strong> In a Star topology, every workstation connects directly to the central device with its own dedicated line. Count how many lines 6 workstations need.");
+    }
+    if (dev === 0) {
+      hints.push("<strong>Central Hardware:</strong> A Star topology requires a central connecting device in the middle.");
+    } else if (dev === 50) {
+      hints.push("<strong>Central Hardware Trap:</strong> A Hub shares bandwidth and broadcasts signals to all ports, causing collisions! Re-read Requirement #1.");
+    }
+    if (scaleCost !== 100) {
+      hints.push("<strong>Expansion Cost (Node G):</strong> Assuming your central device already has an open port, how many new cables do you need to plug in one additional workstation?");
+    }
 
-    const rRel = document.getElementById('s1_r_rel').value;
-    const rSpd = document.getElementById('s1_r_spd').value;
-    const rScl = document.getElementById('s1_r_scl').value;
-    const rCol = document.getElementById('s1_r_col').value;
-    const rCst = document.getElementById('s1_r_cst').value;
+    var rRel = document.getElementById('s1_r_rel').value;
+    var rSpd = document.getElementById('s1_r_spd').value;
+    var rScl = document.getElementById('s1_r_scl').value;
+    var rCol = document.getElementById('s1_r_col').value;
+    var rCst = document.getElementById('s1_r_cst').value;
 
-    if (!["Medium", "High"].includes(rRel)) hints.push("<strong>Reliability Rating:</strong> One outer cable breaking only affects 1 node, BUT what happens if the central device fails? It's neither the lowest nor the highest reliability.");
-    if (!["High", "Very High"].includes(rSpd)) hints.push("<strong>Speed Rating:</strong> With dedicated switch ports and only 2 hops between any two nodes, how fast is traffic delivery?");
-    if (!["High", "Very High"].includes(rScl)) hints.push("<strong>Scalability Rating:</strong> Think about how easy it was to add Node G on your paper diagram.");
-    if (rCol !== "Very Low / None") hints.push("<strong>Data Collisions Rating:</strong> When using a Switch instead of a Hub, each port is its own isolated collision domain.");
-    if (rCst !== "Medium") hints.push("<strong>Cost Rating:</strong> Compare this build against a cheap single-cable Bus and an expensive multi-cable Mesh.");
+    if (rRel !== "Medium" && rRel !== "High") {
+      hints.push("<strong>Reliability Rating:</strong> One outer cable breaking only affects 1 node, BUT what happens if the central device fails? It is neither the lowest nor the highest reliability.");
+    }
+    if (rSpd !== "High" && rSpd !== "Very High") {
+      hints.push("<strong>Speed Rating:</strong> With dedicated switch ports and only 2 hops between any two nodes, how fast is traffic delivery?");
+    }
+    if (rScl !== "High" && rScl !== "Very High") {
+      hints.push("<strong>Scalability Rating:</strong> Think about how easy it was to add Node G on your paper diagram.");
+    }
+    if (rCol !== "Very Low / None") {
+      hints.push("<strong>Data Collisions Rating:</strong> When using a Switch instead of a Hub, each port is its own isolated collision domain.");
+    }
+    if (rCst !== "Medium") {
+      hints.push("<strong>Cost Rating:</strong> Compare this build against a cheap single-cable Bus and an expensive multi-cable Mesh.");
+    }
 
-    const justInputs = ['s1_j_rel','s1_j_spd','s1_j_scl','s1_j_col','s1_j_cst'];
-    if (justInputs.some(id => document.getElementById(id).value.trim().length < 10)) {
-      hints.push("<strong>Technical Justifications:</strong> Make sure all 5 "Why?" text boxes have a complete explanation.");
+    var justIds = ['s1_j_rel', 's1_j_spd', 's1_j_scl', 's1_j_col', 's1_j_cst'];
+    var missingJust = false;
+    for (var i = 0; i < justIds.length; i++) {
+      if (document.getElementById(justIds[i]).value.trim().length < 8) {
+        missingJust = true;
+      }
+    }
+    if (missingJust) {
+      hints.push("<strong>Technical Justifications:</strong> Make sure all 5 'Why?' text boxes have a complete explanation (at least a short sentence each).");
     }
 
     renderFeedback('s1_feedback', 's1_badge', attempts.c1, hints);
@@ -351,30 +381,52 @@
 
   function checkCase2() {
     attempts.c2++;
-    let hints = [];
-    const cables = parseInt(document.getElementById('s2_cables').value) || 0;
-    const ports = parseInt(document.getElementById('s2_ports').value) || 0;
-    const newCables = parseInt(document.getElementById('s2_newcables').value) || 0;
+    var hints = [];
+    var cables = parseInt(document.getElementById('s2_cables').value, 10) || 0;
+    var ports = parseInt(document.getElementById('s2_ports').value, 10) || 0;
+    var newCables = parseInt(document.getElementById('s2_newcables').value, 10) || 0;
 
-    if (cables !== 15) hints.push("<strong>Total Cables:</strong> Each of the 6 nodes must connect to the other 5 nodes, without double-counting links (A-to-B is the same cable as B-to-A). Check your paper drawing!");
-    if (ports !== 5) hints.push("<strong>NIC Ports per Node:</strong> Look at just ONE workstation on your diagram. How many cables are plugged directly into it?");
-    if (newCables !== 6) hints.push("<strong>Adding Node G:</strong> To maintain a Full Mesh, the 7th workstation must connect directly to every existing workstation on the network.");
+    if (cables !== 15) {
+      hints.push("<strong>Total Cables:</strong> Each of the 6 nodes must connect to the other 5 nodes, without double-counting links (A-to-B is the same cable as B-to-A). Check your paper drawing!");
+    }
+    if (ports !== 5) {
+      hints.push("<strong>NIC Ports per Node:</strong> Look at just ONE workstation on your diagram. How many cables are plugged directly into it?");
+    }
+    if (newCables !== 6) {
+      hints.push("<strong>Adding Node G:</strong> To maintain a Full Mesh, the 7th workstation must connect directly to every existing workstation on the network.");
+    }
 
-    const rRel = document.getElementById('s2_r_rel').value;
-    const rSpd = document.getElementById('s2_r_spd').value;
-    const rScl = document.getElementById('s2_r_scl').value;
-    const rCol = document.getElementById('s2_r_col').value;
-    const rCst = document.getElementById('s2_r_cst').value;
+    var rRel = document.getElementById('s2_r_rel').value;
+    var rSpd = document.getElementById('s2_r_spd').value;
+    var rScl = document.getElementById('s2_r_scl').value;
+    var rCol = document.getElementById('s2_r_col').value;
+    var rCst = document.getElementById('s2_r_cst').value;
 
-    if (rRel !== "Very High") hints.push("<strong>Reliability Rating:</strong> Even after cutting 3 cables on your diagram, could nodes still reroute traffic?");
-    if (!["High", "Very High"].includes(rSpd)) hints.push("<strong>Speed Rating:</strong> Every pair of nodes has a direct, 1-hop dedicated connection.");
-    if (!["Very Low / None", "Low"].includes(rScl)) hints.push("<strong>Scalability Rating:</strong> Look at how many new cables and extra NIC ports are required every time a single new person joins.");
-    if (rCol !== "Very Low / None") hints.push("<strong>Data Collisions Rating:</strong> Are any cables shared between multiple pairs, or is every link dedicated point-to-point?");
-    if (rCst !== "Very High") hints.push("<strong>Cost Rating:</strong> Compare the number of cables and NIC ports here against every other topology.");
+    if (rRel !== "Very High") {
+      hints.push("<strong>Reliability Rating:</strong> Even after cutting 3 cables on your diagram, could nodes still reroute traffic?");
+    }
+    if (rSpd !== "High" && rSpd !== "Very High") {
+      hints.push("<strong>Speed Rating:</strong> Every pair of nodes has a direct, 1-hop dedicated connection.");
+    }
+    if (rScl !== "Very Low / None" && rScl !== "Low") {
+      hints.push("<strong>Scalability Rating:</strong> Look at how many new cables and extra NIC ports are required every time a single new person joins.");
+    }
+    if (rCol !== "Very Low / None") {
+      hints.push("<strong>Data Collisions Rating:</strong> Are any cables shared between multiple pairs, or is every link dedicated point-to-point?");
+    }
+    if (rCst !== "Very High") {
+      hints.push("<strong>Cost Rating:</strong> Compare the number of cables and NIC ports here against every other topology.");
+    }
 
-    const justInputs = ['s2_j_rel','s2_j_spd','s2_j_scl','s2_j_col','s2_j_cst'];
-    if (justInputs.some(id => document.getElementById(id).value.trim().length < 10)) {
-      hints.push("<strong>Technical Justifications:</strong> Complete all 5 "Why?" explanation boxes before finalizing.");
+    var justIds = ['s2_j_rel', 's2_j_spd', 's2_j_scl', 's2_j_col', 's2_j_cst'];
+    var missingJust = false;
+    for (var i = 0; i < justIds.length; i++) {
+      if (document.getElementById(justIds[i]).value.trim().length < 8) {
+        missingJust = true;
+      }
+    }
+    if (missingJust) {
+      hints.push("<strong>Technical Justifications:</strong> Complete all 5 'Why?' explanation boxes before finalizing.");
     }
 
     renderFeedback('s2_feedback', 's2_badge', attempts.c2, hints);
@@ -382,29 +434,42 @@
 
   function checkCase3() {
     attempts.c3++;
-    let hints = [];
-    const hubs = parseInt(document.getElementById('s3_hubs').value) || 0;
-    const sw = parseInt(document.getElementById('s3_switches').value) || 0;
-    const cab = parseInt(document.getElementById('s3_cables').value) || 0;
-    const total = (hubs * 50) + (sw * 300) + (cab * 100);
-    const justify = document.getElementById('s3_justify').value.trim();
+    var hints = [];
+    var hubs = parseInt(document.getElementById('s3_hubs').value, 10) || 0;
+    var sw = parseInt(document.getElementById('s3_switches').value, 10) || 0;
+    var cab = parseInt(document.getElementById('s3_cables').value, 10) || 0;
+    var total = (hubs * 50) + (sw * 300) + (cab * 100);
+    var justify = document.getElementById('s3_justify').value.trim();
 
-    if (hubs > 0) hints.push("<strong>Constraint 2 Violation (Collisions):</strong> You included a Hub! Remember what Hubs do to collision domains.");
-    if (sw < 2) hints.push("<strong>Department Structure:</strong> You have two separate departments (A–D and E–H) that each need easy $100 scalability and zero collisions.");
-    if (cab < 10) hints.push("<strong>Constraint 4 Violation (Fault Tolerance):</strong> You need 8 cables just to connect the 8 workstations to their department switches. How many inter-department cables between switches do you need so that cutting ONE (✂️) doesn't disconnect the departments?");
-    if (total > 1800) hints.push("<strong>Constraint 1 Violation (Budget):</strong> Your total is $" + total + ", which exceeds the $1,800 limit. Can you achieve core redundancy with fewer switches or cables?");
-    if (justify.length < 30) hints.push("<strong>Architectural Defense:</strong> Write a clear explanation naming the topologies you combined and explaining how all 4 constraints are met.");
+    if (hubs > 0) {
+      hints.push("<strong>Constraint 2 Violation (Collisions):</strong> You included a Hub! Remember what Hubs do to collision domains.");
+    }
+    if (sw < 2) {
+      hints.push("<strong>Department Structure:</strong> You have two separate departments (A–D and E–H) that each need easy $100 scalability and zero collisions.");
+    }
+    if (cab < 10) {
+      hints.push("<strong>Constraint 4 Violation (Fault Tolerance):</strong> You need 8 cables just to connect the 8 workstations to their department switches. How many inter-department cables between switches do you need so that cutting ONE (✂️) does not disconnect the departments?");
+    }
+    if (total > 1800) {
+      hints.push("<strong>Constraint 1 Violation (Budget):</strong> Your total is $" + total + ", which exceeds the $1,800 limit. Can you achieve core redundancy with fewer switches or cables?");
+    }
+    if (justify.length < 25) {
+      hints.push("<strong>Architectural Defense:</strong> Write a clear explanation naming the topologies you combined and explaining how all 4 constraints are met.");
+    }
 
     renderFeedback('s3_feedback', 's3_badge', attempts.c3, hints);
   }
 
   function exportPDF() {
-    const name = document.getElementById('studentName').value.trim();
+    var nameInput = document.getElementById('studentName');
+    var name = nameInput.value.trim();
     if (!name) {
-      alert("Please enter your full name before exporting your PDF.");
-      document.getElementById('studentName').focus();
+      nameInput.classList.add('input-error');
+      nameInput.focus();
+      alert("Please enter your full name at the top of the page before exporting your PDF.");
       return;
     }
+    nameInput.classList.remove('input-error');
     window.print();
   }
 </script>
