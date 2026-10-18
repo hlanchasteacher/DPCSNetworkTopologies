@@ -11,7 +11,7 @@
             color: #333;
             line-height: 1.6;
             padding: 20px;
-            max-width: 900px;
+            max-width: 1000px;
             margin: auto;
         }
         .container {
@@ -20,7 +20,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        h1, h2 {
+        h1, h2, h3 {
             color: #2c3e50;
         }
         .lab-section {
@@ -29,13 +29,30 @@
             border-radius: 8px;
             margin-bottom: 20px;
         }
+        .context-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .context-card {
+            background: #fff;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .context-card h3 {
+            margin-top: 0;
+            color: #2980b9;
+        }
         .input-group {
             margin-bottom: 15px;
         }
         label {
             font-weight: bold;
             display: inline-block;
-            width: 200px;
+            width: 220px;
         }
         input[type="number"], select {
             padding: 8px;
@@ -52,6 +69,7 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
+            margin-top: 10px;
         }
         button:hover {
             background-color: #2980b9;
@@ -76,6 +94,7 @@
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 0.9em;
+            background: #fff;
         }
         th, td {
             border: 1px solid #ddd;
@@ -91,17 +110,39 @@
 <body>
 
 <div class="container">
-    <h1>Network Topology Builder Lab</h1>
-    <p>Configure the required hardware for your network. Remember the formulas and rules from your study notes!</p>
+    <h1>Network Topology Builder Lab & Study Guide</h1>
+    <p>Review the real-world contexts below, then use your knowledge of network formulas to configure the required hardware.</p>
 
     <div class="lab-section">
-        <h2>Hardware Calculator</h2>
+        <h2>Real-World Context & Applications</h2>
+        <div class="context-grid">
+            <div class="context-card">
+                <h3>⭐ Star Topology</h3>
+                <p><strong>Definition:</strong> All nodes connect directly to a single central switch via dedicated cables.</p>
+                <p><strong>Real-World Example:</strong> A standard school computer lab or a typical office building floor. Everything runs back to one central switch in a server closet.</p>
+            </div>
+            <div class="context-card">
+                <h3>🕸️ Mesh Topology</h3>
+                <p><strong>Definition:</strong> Nodes connect directly to multiple other nodes, creating a highly redundant web with no single point of failure.</p>
+                <p><strong>Real-World Example:</strong> Military tactical radios, factory IoT sensors avoiding heavy machinery, or multi-node home Wi-Fi kits (like Google Nest).</p>
+            </div>
+            <div class="context-card">
+                <h3>🔗 Hybrid Topology</h3>
+                <p><strong>Definition:</strong> Combines elements from different topologies (e.g., a meshed core connecting star branches) to optimize performance and scale.</p>
+                <p><strong>Real-World Example:</strong> Large corporate networks or smart cities. A meshed core provides durability between buildings, while each building uses a star layout.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="lab-section">
+        <h2>Hardware Procurement Calculator</h2>
+        <p><em>Note: Hubs are obsolete and are excluded from modern network configurations to minimize collision domains.</em></p>
         
         <div class="input-group">
             <label for="topology">Select Topology:</label>
             <select id="topology" onchange="resetFeedback()">
                 <option value="star">Star Topology</option>
-                <option value="mesh">Full Mesh Topology</option>
+                <option value="mesh">Full Wired Mesh</option>
             </select>
         </div>
 
@@ -111,9 +152,6 @@
         </div>
 
         <hr style="margin: 20px 0; border: 0; border-top: 1px solid #ccc;">
-        
-        <h3>Procurement List</h3>
-        <p><em>Note: Hubs are obsolete and no longer used in modern networks.</em></p>
 
         <div class="input-group">
             <label for="switches">Central Switches Needed:</label>
@@ -183,7 +221,6 @@
         const n = parseInt(document.getElementById('nodes').value);
         const switches = parseInt(document.getElementById('switches').value);
         const cables = parseInt(document.getElementById('cables').value);
-        const feedbackEl = document.getElementById('feedback');
         
         let isCorrect = true;
         let hints = [];
@@ -194,7 +231,6 @@
         }
 
         if (topology === 'star') {
-            // Star Topology Logic: 1 Switch, n cables
             if (switches !== 1) {
                 isCorrect = false;
                 hints.push("A Star topology requires exactly 1 central Switch to manage the traffic.");
@@ -205,7 +241,6 @@
             }
         } 
         else if (topology === 'mesh') {
-            // Full Mesh Topology Logic: 0 Switches, n(n-1)/2 cables
             const requiredCables = (n * (n - 1)) / 2;
             
             if (switches !== 0) {
@@ -219,7 +254,7 @@
         }
 
         if (isCorrect) {
-            showFeedback("✅ Correct! Your hardware list perfectly matches the topology design.", true);
+            showFeedback("✅ Correct! Your hardware list perfectly matches the topology design rules.", true);
         } else {
             showFeedback("❌ Incorrect configuration. <br><br>" + hints.join("<br>"), false);
         }
