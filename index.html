@@ -111,7 +111,7 @@
             font-size: 0.95em;
         }
 
-        input[type="number"], select {
+        input[type="text"], input[type="number"], select {
             padding: 10px 12px;
             border: 2px solid var(--border-color);
             border-radius: 4px;
@@ -122,7 +122,11 @@
             transition: border-color 0.2s ease;
         }
 
-        input[type="number"]:focus, select:focus {
+        input[type="text"] {
+            max-width: 100%;
+        }
+
+        input:focus, select:focus {
             outline: none;
             border-color: var(--primary-color);
         }
@@ -142,6 +146,18 @@
 
         button:hover {
             background-color: #0043a6;
+        }
+
+        .export-btn {
+            background-color: var(--secondary-color);
+            width: 100%;
+            font-size: 1.1em;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .export-btn:hover {
+            background-color: #091e42;
         }
 
         .feedback-panel {
@@ -185,6 +201,34 @@
         .color-green { color: #006644; font-weight: 600; }
         .color-orange { color: #cf5102; font-weight: 600; }
         .color-red { color: #bf2600; font-weight: 600; }
+
+        /* Print formatting for PDF Export */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .module-card, .briefing-card {
+                border: 1px solid #ccc;
+                box-shadow: none;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+            button {
+                display: none !important;
+            }
+            input, select {
+                border: none;
+                border-bottom: 2px solid #ccc;
+                border-radius: 0;
+                padding-left: 0;
+                background: transparent;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -192,6 +236,14 @@
     <div class="header-container">
         <h1>Architecture Provisioning Portal</h1>
         <p>Enterprise Network Deployment & Validation Dashboard</p>
+    </div>
+
+    <!-- Operator Identification -->
+    <div class="module-card" style="padding: 20px 30px;">
+        <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 1.1em; color: var(--primary-color);">Operator Name (Student):</label>
+            <input type="text" id="student-name" placeholder="Enter your full name here before exporting...">
+        </div>
     </div>
 
     <!-- Infrastructure Evaluation Framework -->
@@ -343,6 +395,9 @@
         <div id="fb-t4" class="feedback-panel"></div>
     </div>
 
+    <!-- Export Button -->
+    <button class="export-btn" onclick="window.print()">📥 Export / Save as PDF</button>
+
     <script>
         const SWITCH_COST = 850;
         const CABLE_COST = 120;
@@ -415,8 +470,8 @@
             if (meshCb !== 21) hints.push("Mesh Expansion: Calculate the new mesh formula: 7(7-1) / 2. For 7 nodes, that's (7 × 6) / 2.");
             
             if (hints.length === 0) {
-                const starDelta = (7 - 6) * CABLE_COST; // Cost of 1 extra cable
-                const meshDelta = (21 - 15) * CABLE_COST; // Cost of 6 extra cables
+                const starDelta = (7 - 6) * CABLE_COST; 
+                const meshDelta = (21 - 15) * CABLE_COST; 
                 
                 showFeedback('fb-t3', true, `<strong>Expansion Validated:</strong> Scalability requirements calculated accurately.<br><br><strong>Financial Impact (Cost to add 1 single device):</strong><br>• Star Topology Expansion Cost: <strong>+${formatCurrency(starDelta)}</strong> (1 new cable)<br>• Full Mesh Topology Expansion Cost: <strong>+${formatCurrency(meshDelta)}</strong> (6 new cables)<br><br><em>Conclusion: This proves why Full Mesh has a 'Poor' scalability rating in your matrix. Adding just one node requires connecting it to every other node!</em>`);
             } else {
