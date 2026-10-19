@@ -27,7 +27,7 @@
             color: var(--text-main);
             line-height: 1.6;
             padding: 30px 20px;
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
         }
 
@@ -39,7 +39,7 @@
         .header-container h1 {
             color: var(--secondary-color);
             margin-bottom: 5px;
-            font-size: 2em;
+            font-size: 2.2em;
         }
 
         .header-container p {
@@ -65,19 +65,18 @@
             margin-bottom: 30px;
         }
 
-        .briefing-card h2 {
-            color: var(--info-text);
-            font-size: 1.2em;
-            margin-top: 0;
-        }
-
-        .module-card h2 {
+        .briefing-card h2, .module-card h2 {
             color: var(--secondary-color);
             font-size: 1.3em;
             margin-top: 0;
             border-bottom: 2px solid var(--background-color);
             padding-bottom: 10px;
             margin-bottom: 20px;
+        }
+
+        .briefing-card h2 {
+            color: var(--info-text);
+            border-bottom: none;
         }
 
         .scenario-text {
@@ -89,15 +88,6 @@
         .highlight {
             font-weight: 600;
             color: var(--primary-color);
-        }
-
-        ul.guidelines {
-            color: var(--text-main);
-            padding-left: 20px;
-        }
-
-        ul.guidelines li {
-            margin-bottom: 8px;
         }
 
         .form-group {
@@ -166,31 +156,88 @@
             border-left: 4px solid #ff5630;
         }
 
-        .status-icon {
-            font-weight: bold;
-            margin-right: 8px;
+        /* Matrix Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.9em;
+            background: var(--card-bg);
         }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .color-green { color: #006644; font-weight: 600; }
+        .color-orange { color: #cf5102; font-weight: 600; }
+        .color-red { color: #bf2600; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <div class="header-container">
         <h1>Architecture Provisioning Portal</h1>
-        <p>Enterprise Network Deployment & Validation Tool</p>
+        <p>Enterprise Network Deployment & Validation Dashboard</p>
+    </div>
+
+    <!-- Infrastructure Evaluation Framework -->
+    <div class="module-card">
+        <h2>Infrastructure Evaluation Framework (5-Factor Matrix)</h2>
+        <p>Consult this framework to validate architectural decisions based on resilience, performance, and budget constraints.</p>
+        <table>
+            <tr>
+                <th>Evaluation Factor</th>
+                <th>Star Topology</th>
+                <th>Full Mesh Topology</th>
+                <th>Hybrid Topology</th>
+            </tr>
+            <tr>
+                <td>1. Reliability</td>
+                <td class="color-orange">Moderate (Central SPOF)</td>
+                <td class="color-green">Very High (No SPOF)</td>
+                <td class="color-green">Very High (Balanced)</td>
+            </tr>
+            <tr>
+                <td>2. Transmission Speed</td>
+                <td class="color-green">Fast (Dedicated links)</td>
+                <td class="color-orange">Hop-Dependent</td>
+                <td class="color-orange">Varies by Segment</td>
+            </tr>
+            <tr>
+                <td>3. Scalability</td>
+                <td class="color-green">Good (Up to port limit)</td>
+                <td class="color-red">Poor (Cabling wall)</td>
+                <td class="color-green">Highly Scalable</td>
+            </tr>
+            <tr>
+                <td>4. Data Collisions</td>
+                <td class="color-green">Minimal (Switch Managed)</td>
+                <td class="color-green">Uncommon (Wired)</td>
+                <td class="color-green">Low (Locally Managed)</td>
+            </tr>
+            <tr>
+                <td>5. Cost & Budget</td>
+                <td class="color-orange">Moderate (Scales linearly)</td>
+                <td class="color-red">Extreme (Wired Full Mesh)</td>
+                <td class="color-orange">Moderate to High</td>
+            </tr>
+        </table>
     </div>
 
     <!-- System Briefing / Instructions -->
     <div class="briefing-card">
         <h2>Operator Briefing & Deployment Guidelines</h2>
-        <p>Welcome to the provisioning portal. As a network engineer, you are tasked with deploying hardware for enterprise environments according to A2.2.1 infrastructure standards.</p>
-        
-        <ul class="guidelines">
-            <li><strong>Star Topology:</strong> Relies on exactly 1 central switch to aggregate traffic. The link allocation ratio is 1:1 (n cables for n nodes).</li>
-            <li><strong>Full Mesh Topology:</strong> A decentralized, highly resilient architecture. Requires 0 central switches. Link calculation formula: n(n-1) / 2.</li>
-            <li><strong>Hybrid Topology:</strong> Combines architectures to isolate local faults (reducing the blast radius) while maintaining core scalability.</li>
+        <p>As a network engineer, you are tasked with deploying hardware using the matrix above. Note standard procurement costs:</p>
+        <ul style="margin-top: 5px;">
+            <li><strong>L2 Access Switch:</strong> €850 per unit</li>
+            <li><strong>Enterprise Cable Run:</strong> €120 per dedicated link</li>
         </ul>
-
-        <p><strong>Action Required:</strong> Analyze each deployment module below. Calculate the required hardware based on the node count, input the parameters, and validate your configuration.</p>
+        <p><strong>Action Required:</strong> Analyze the node count in each module, calculate the required hardware, and validate your configuration to view the total Deployment CAPEX.</p>
     </div>
 
     <!-- Task 1: Star Topology -->
@@ -207,7 +254,7 @@
             <input type="number" id="t1-cables" min="0" placeholder="Enter integer amount...">
         </div>
         
-        <button onclick="checkT1()">Validate Hardware</button>
+        <button onclick="checkT1()">Validate Hardware & Cost</button>
         <div id="fb-t1" class="feedback-panel"></div>
     </div>
 
@@ -225,7 +272,7 @@
             <input type="number" id="t2-cables" min="0" placeholder="Enter integer amount...">
         </div>
         
-        <button onclick="checkT2()">Validate Hardware</button>
+        <button onclick="checkT2()">Validate Hardware & Cost</button>
         <div id="fb-t2" class="feedback-panel"></div>
     </div>
 
@@ -245,7 +292,7 @@
         </div>
         
         <div class="form-group">
-            <label>Scenario B: Campus LAN requiring localized fault isolation (reduced blast radius) while scaling a highly available core.</label>
+            <label>Scenario B: Campus LAN requiring localized fault isolation (reduced blast radius) while maintaining budget scaling.</label>
             <select id="t3-q2">
                 <option value="">-- Select Architecture --</option>
                 <option value="star">Standard Star Topology</option>
@@ -259,11 +306,18 @@
     </div>
 
     <script>
+        const SWITCH_COST = 850;
+        const CABLE_COST = 120;
+
         function showFeedback(elementId, isCorrect, text) {
             const el = document.getElementById(elementId);
             el.style.display = 'block';
             el.innerHTML = text;
             el.className = isCorrect ? 'feedback-panel status-success' : 'feedback-panel status-error';
+        }
+
+        function formatCurrency(amount) {
+            return "€" + amount.toLocaleString('en-US');
         }
 
         function checkT1() {
@@ -272,16 +326,17 @@
             let hints = [];
             
             if (isNaN(sw) || isNaN(cb)) {
-                showFeedback('fb-t1', false, "<span class='status-icon'>✕</span> <strong>Validation Error:</strong> Numerical input is required for all fields.");
+                showFeedback('fb-t1', false, "<strong>Validation Error:</strong> Numerical input is required for all fields.");
                 return;
             }
             if (sw !== 1) hints.push("Edge star topologies aggregate traffic through exactly 1 central switch.");
             if (cb !== 6) hints.push("Link calculation failed. A star layout requires a 1:1 ratio (n links for n nodes).");
             
             if (hints.length === 0) {
-                showFeedback('fb-t1', true, "<span class='status-icon'>✓</span> <strong>Validation Successful:</strong> Hardware correctly provisioned (1 Switch, 6 Links).");
+                const totalCost = (sw * SWITCH_COST) + (cb * CABLE_COST);
+                showFeedback('fb-t1', true, `<strong>Validation Successful:</strong> Hardware correctly provisioned.<br><br><strong>Financial Impact:</strong><br>• Switch Cost: ${sw} x €850<br>• Cabling Cost: ${cb} x €120<br>• <strong>Total Deployment CAPEX: ${formatCurrency(totalCost)}</strong>`);
             } else {
-                showFeedback('fb-t1', false, "<span class='status-icon'>✕</span> <strong>Provisioning Failed:</strong><br><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t1', false, "<strong>Provisioning Failed:</strong><br><br>• " + hints.join("<br>• "));
             }
         }
 
@@ -291,16 +346,17 @@
             let hints = [];
             
             if (isNaN(sw) || isNaN(cb)) {
-                showFeedback('fb-t2', false, "<span class='status-icon'>✕</span> <strong>Validation Error:</strong> Numerical input is required for all fields.");
+                showFeedback('fb-t2', false, "<strong>Validation Error:</strong> Numerical input is required for all fields.");
                 return;
             }
             if (sw !== 0) hints.push("A true mesh utilizes decentralized direct routing. Central switches are bypassed (0 required).");
             if (cb !== 15) hints.push("Link calculation failed. Execute the full mesh formula: n(n-1) / 2. For 6 nodes: (6 × 5) / 2.");
             
             if (hints.length === 0) {
-                showFeedback('fb-t2', true, "<span class='status-icon'>✓</span> <strong>Validation Successful:</strong> Backbone correctly provisioned (0 Central Switches, 15 Direct Uplinks).");
+                const totalCost = (sw * SWITCH_COST) + (cb * CABLE_COST);
+                showFeedback('fb-t2', true, `<strong>Validation Successful:</strong> Backbone correctly provisioned.<br><br><strong>Financial Impact:</strong><br>• Switch Cost: ${sw} x €850<br>• Cabling Cost: ${cb} x €120<br>• <strong>Total Deployment CAPEX: ${formatCurrency(totalCost)}</strong> <br><em>(Notice how quickly cabling costs escalate in a Full Mesh!)</em>`);
             } else {
-                showFeedback('fb-t2', false, "<span class='status-icon'>✕</span> <strong>Provisioning Failed:</strong><br><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t2', false, "<strong>Provisioning Failed:</strong><br><br>• " + hints.join("<br>• "));
             }
         }
 
@@ -310,16 +366,16 @@
             let hints = [];
 
             if (q1 === '' || q2 === '') {
-                showFeedback('fb-t3', false, "<span class='status-icon'>✕</span> <strong>Validation Error:</strong> All scenarios must be resolved before submission.");
+                showFeedback('fb-t3', false, "<strong>Validation Error:</strong> All scenarios must be resolved before submission.");
                 return;
             }
             if (q1 !== 'mesh') hints.push("Scenario A: Multi-hop wireless routing is required to bypass physical interference.");
-            if (q2 !== 'hybrid') hints.push("Scenario B: Combining a meshed core with star edge segments isolates faults and scales efficiently.");
+            if (q2 !== 'hybrid') hints.push("Scenario B: Combining a meshed core with star edge segments isolates faults and scales efficiently on a budget.");
 
             if (hints.length === 0) {
-                showFeedback('fb-t3', true, "<span class='status-icon'>✓</span> <strong>ADR Approved:</strong> Optimal network typologies have been selected for both constraints.");
+                showFeedback('fb-t3', true, "<strong>ADR Approved:</strong> Optimal network typologies have been selected for both constraints. The architecture balances reliability with budget realities.");
             } else {
-                showFeedback('fb-t3', false, "<span class='status-icon'>✕</span> <strong>Architectural Review Rejected:</strong><br><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t3', false, "<strong>Architectural Review Rejected:</strong><br><br>• " + hints.join("<br>• "));
             }
         }
     </script>
