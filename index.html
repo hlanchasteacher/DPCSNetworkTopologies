@@ -78,6 +78,15 @@
             color: var(--info-text);
             border-bottom: none;
         }
+        
+        .sub-header {
+            color: var(--secondary-color);
+            font-size: 1.1em;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 5px;
+        }
 
         .scenario-text {
             font-size: 1.05em;
@@ -276,14 +285,43 @@
         <div id="fb-t2" class="feedback-panel"></div>
     </div>
 
-    <!-- Task 3: Hybrid & Real-World Application -->
+    <!-- Task 3: Scalability Expansion -->
     <div class="module-card">
-        <h2>Module 03: Architecture Decision Record (ADR)</h2>
+        <h2>Module 03: Scalability & Network Expansion</h2>
+        <p class="scenario-text">The enterprise is growing. Expand both previous 6-node networks to support <span class="highlight">7 total nodes</span>. Calculate the <strong>new total hardware requirements</strong> for each architecture.</p>
+        
+        <h3 class="sub-header">A. Star Topology Expansion (7 Nodes Total)</h3>
+        <div class="form-group">
+            <label>Total L2 Access Switches:</label>
+            <input type="number" id="t3-star-switches" min="0" placeholder="Enter total switches...">
+        </div>
+        <div class="form-group">
+            <label>Total Point-to-Point Links:</label>
+            <input type="number" id="t3-star-cables" min="0" placeholder="Enter total cables...">
+        </div>
+
+        <h3 class="sub-header">B. Full Mesh Backbone Expansion (7 Nodes Total)</h3>
+        <div class="form-group">
+            <label>Total Central Switches:</label>
+            <input type="number" id="t3-mesh-switches" min="0" placeholder="Enter total switches...">
+        </div>
+        <div class="form-group">
+            <label>Total Point-to-Point Uplinks:</label>
+            <input type="number" id="t3-mesh-cables" min="0" placeholder="Enter total cables...">
+        </div>
+        
+        <button onclick="checkT3()">Validate Expansion & CAPEX Delta</button>
+        <div id="fb-t3" class="feedback-panel"></div>
+    </div>
+
+    <!-- Task 4: Hybrid & Real-World Application -->
+    <div class="module-card">
+        <h2>Module 04: Architecture Decision Record (ADR)</h2>
         <p class="scenario-text">Analyze the following deployment constraints and assign the optimal network topology architecture.</p>
         
         <div class="form-group">
             <label>Scenario A: Industrial IoT deployment where RF attenuation (heavy machinery) disrupts direct line-of-sight.</label>
-            <select id="t3-q1">
+            <select id="t4-q1">
                 <option value="">-- Select Architecture --</option>
                 <option value="star">Standard Star Topology</option>
                 <option value="mesh">Wireless Mesh Topology</option>
@@ -293,7 +331,7 @@
         
         <div class="form-group">
             <label>Scenario B: Campus LAN requiring localized fault isolation (reduced blast radius) while maintaining budget scaling.</label>
-            <select id="t3-q2">
+            <select id="t4-q2">
                 <option value="">-- Select Architecture --</option>
                 <option value="star">Standard Star Topology</option>
                 <option value="mesh">Wired Full Mesh Topology</option>
@@ -301,8 +339,8 @@
             </select>
         </div>
 
-        <button onclick="checkT3()">Submit ADR</button>
-        <div id="fb-t3" class="feedback-panel"></div>
+        <button onclick="checkT4()">Submit ADR</button>
+        <div id="fb-t4" class="feedback-panel"></div>
     </div>
 
     <script>
@@ -361,21 +399,47 @@
         }
 
         function checkT3() {
-            const q1 = document.getElementById('t3-q1').value;
-            const q2 = document.getElementById('t3-q2').value;
+            const starSw = parseInt(document.getElementById('t3-star-switches').value);
+            const starCb = parseInt(document.getElementById('t3-star-cables').value);
+            const meshSw = parseInt(document.getElementById('t3-mesh-switches').value);
+            const meshCb = parseInt(document.getElementById('t3-mesh-cables').value);
+            let hints = [];
+            
+            if (isNaN(starSw) || isNaN(starCb) || isNaN(meshSw) || isNaN(meshCb)) {
+                showFeedback('fb-t3', false, "<strong>Validation Error:</strong> Numerical input is required for all fields.");
+                return;
+            }
+            if (starSw !== 1) hints.push("Star Expansion: You still only need 1 central switch to aggregate the traffic.");
+            if (starCb !== 7) hints.push("Star Expansion: A 7-node star requires exactly 7 cables (1:1 ratio).");
+            if (meshSw !== 0) hints.push("Mesh Expansion: A full mesh still bypasses central switches (0 required).");
+            if (meshCb !== 21) hints.push("Mesh Expansion: Calculate the new mesh formula: 7(7-1) / 2. For 7 nodes, that's (7 × 6) / 2.");
+            
+            if (hints.length === 0) {
+                const starDelta = (7 - 6) * CABLE_COST; // Cost of 1 extra cable
+                const meshDelta = (21 - 15) * CABLE_COST; // Cost of 6 extra cables
+                
+                showFeedback('fb-t3', true, `<strong>Expansion Validated:</strong> Scalability requirements calculated accurately.<br><br><strong>Financial Impact (Cost to add 1 single device):</strong><br>• Star Topology Expansion Cost: <strong>+${formatCurrency(starDelta)}</strong> (1 new cable)<br>• Full Mesh Topology Expansion Cost: <strong>+${formatCurrency(meshDelta)}</strong> (6 new cables)<br><br><em>Conclusion: This proves why Full Mesh has a 'Poor' scalability rating in your matrix. Adding just one node requires connecting it to every other node!</em>`);
+            } else {
+                showFeedback('fb-t3', false, "<strong>Expansion Failed:</strong><br><br>• " + hints.join("<br>• "));
+            }
+        }
+
+        function checkT4() {
+            const q1 = document.getElementById('t4-q1').value;
+            const q2 = document.getElementById('t4-q2').value;
             let hints = [];
 
             if (q1 === '' || q2 === '') {
-                showFeedback('fb-t3', false, "<strong>Validation Error:</strong> All scenarios must be resolved before submission.");
+                showFeedback('fb-t4', false, "<strong>Validation Error:</strong> All scenarios must be resolved before submission.");
                 return;
             }
             if (q1 !== 'mesh') hints.push("Scenario A: Multi-hop wireless routing is required to bypass physical interference.");
             if (q2 !== 'hybrid') hints.push("Scenario B: Combining a meshed core with star edge segments isolates faults and scales efficiently on a budget.");
 
             if (hints.length === 0) {
-                showFeedback('fb-t3', true, "<strong>ADR Approved:</strong> Optimal network typologies have been selected for both constraints. The architecture balances reliability with budget realities.");
+                showFeedback('fb-t4', true, "<strong>ADR Approved:</strong> Optimal network typologies have been selected for both constraints. The architecture balances reliability with budget realities.");
             } else {
-                showFeedback('fb-t3', false, "<strong>Architectural Review Rejected:</strong><br><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t4', false, "<strong>Architectural Review Rejected:</strong><br><br>• " + hints.join("<br>• "));
             }
         }
     </script>
