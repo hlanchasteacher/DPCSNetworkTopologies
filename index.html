@@ -3,38 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Network Topology Interactive Lab</title>
+    <title>NetEng Lab: Topology Provisioning</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #0d1117;
+            color: #c9d1d9;
             line-height: 1.6;
             padding: 20px;
-            max-width: 800px;
+            max-width: 850px;
             margin: auto;
         }
         .task-container {
-            background: #fff;
+            background: #161b22;
             padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            border-left: 5px solid #58a6ff;
             margin-bottom: 25px;
-            border-left: 5px solid #2980b9;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+        .briefing-container {
+            border-left: 5px solid #3fb950;
         }
         h1 {
-            color: #2c3e50;
+            color: #58a6ff;
             text-align: center;
             margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
         }
         h2 {
-            color: #2980b9;
+            color: #58a6ff;
             margin-top: 0;
+            font-size: 1.2em;
+            border-bottom: 1px dashed #30363d;
+            padding-bottom: 5px;
+        }
+        .briefing-container h2 {
+            color: #3fb950;
         }
         .question {
             margin-bottom: 15px;
-            font-size: 1.05em;
-            font-weight: 500;
+            font-size: 1em;
+            color: #8b949e;
+        }
+        .highlight {
+            color: #c9d1d9;
+            font-weight: bold;
+        }
+        ul.terminal-list {
+            color: #8b949e;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        ul.terminal-list li::before {
+            content: "> ";
+            color: #3fb950;
+            font-weight: bold;
+        }
+        ul.terminal-list li {
+            margin-bottom: 8px;
         }
         .input-group {
             margin-bottom: 15px;
@@ -42,114 +73,141 @@
         label {
             display: block;
             font-weight: bold;
-            margin-bottom: 5px;
-            color: #2c3e50;
+            margin-bottom: 8px;
+            color: #79c0ff;
         }
         input[type="number"], select {
             padding: 10px;
-            border: 1px solid #ccc;
+            background-color: #010409;
+            border: 1px solid #30363d;
+            color: #58a6ff;
             border-radius: 4px;
             width: 100%;
-            max-width: 250px;
+            max-width: 300px;
             display: block;
             font-size: 1em;
+            font-family: 'Consolas', monospace;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #58a6ff;
         }
         button {
-            background-color: #2980b9;
-            color: white;
+            background-color: #238636;
+            color: #ffffff;
             padding: 10px 20px;
-            border: none;
+            border: 1px solid rgba(240,246,252,0.1);
             border-radius: 5px;
             cursor: pointer;
             font-size: 15px;
             font-weight: bold;
+            font-family: 'Consolas', monospace;
             margin-top: 10px;
             transition: background-color 0.2s;
         }
         button:hover {
-            background-color: #1f6391;
+            background-color: #2ea043;
         }
         .feedback {
             margin-top: 15px;
             padding: 15px;
             border-radius: 5px;
             display: none;
-            font-weight: bold;
+            font-weight: normal;
         }
         .correct {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background-color: #051d0f;
+            color: #3fb950;
+            border: 1px solid #238636;
         }
         .incorrect {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background-color: #3d0c02;
+            color: #f85149;
+            border: 1px solid #da3633;
+        }
+        .terminal-prefix {
+            color: #3fb950;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Network Topology Interactive Lab</h1>
+    <h1>> NetEng_Topology_Lab.exe</h1>
+
+    <!-- System Briefing / Instructions -->
+    <div class="task-container briefing-container">
+        <h2>[SYSTEM_INIT] Operator Briefing & Instructions</h2>
+        <p class="question">Welcome to the Architecture Provisioning Terminal. As a network engineer, you are tasked with deploying hardware for enterprise environments according to A2.2.1 curriculum standards.</p>
+        
+        <p class="question"><span class="highlight">DIAGNOSTIC PARAMETERS & FORMULAS:</span></p>
+        <ul class="terminal-list">
+            <li><strong>Star Topology:</strong> Relies on exactly 1 central switch. Cable allocation ratio is 1:1 (n cables for n nodes).</li>
+            <li><strong>Full Mesh Topology:</strong> Decentralized point-to-point. Requires 0 central switches. Cable calculation formula: n(n-1) / 2.</li>
+            <li><strong>Hybrid Topology:</strong> Combines architectures to isolate local faults (reduce blast radius) while maintaining core resilience.</li>
+        </ul>
+
+        <p class="question"><span class="highlight">EXECUTION DIRECTIVE:</span> Analyze each deployment module below. Calculate the required hardware integers based on the node count, input the parameters, and click <em>Execute Build</em> to validate your deployment.</p>
+    </div>
 
     <!-- Task 1: Star Topology -->
     <div class="task-container">
-        <h2>Task 1: The Classroom Star</h2>
-        <p class="question">You are setting up a wired <strong>Star topology</strong> for <strong>6</strong> computer workstations in a classroom.</p>
+        <h2>[MODULE 1] Edge Access Provisioning</h2>
+        <p class="question">Execute a deployment for a wired <span class="highlight">Star topology</span> LAN segment servicing <span class="highlight">6 end-user workstations</span>.</p>
         <div class="input-group">
-            <label>How many central Switches are required?</label>
-            <input type="number" id="t1-switches" min="0">
+            <label>> Required L2 Access Switches:</label>
+            <input type="number" id="t1-switches" min="0" placeholder="Enter integer...">
         </div>
         <div class="input-group">
-            <label>How many dedicated cables are needed?</label>
-            <input type="number" id="t1-cables" min="0">
+            <label>> Required Dedicated Point-to-Point Links (Cables):</label>
+            <input type="number" id="t1-cables" min="0" placeholder="Enter integer...">
         </div>
-        <button onclick="checkT1()">Check Configuration</button>
+        <button onclick="checkT1()">Execute Build</button>
         <div id="fb-t1" class="feedback"></div>
     </div>
 
     <!-- Task 2: Mesh Topology -->
     <div class="task-container">
-        <h2>Task 2: The Critical Mesh</h2>
-        <p class="question">A military site requires a wired <strong>Full Mesh topology</strong> for <strong>6</strong> communication nodes to ensure there is no single point of failure.</p>
+        <h2>[MODULE 2] Core Backbone Provisioning</h2>
+        <p class="question">Deploy a highly available, zero-SPOF wired <span class="highlight">Full Mesh topology</span> connecting <span class="highlight">6 core routers</span> in a datacenter.</p>
         <div class="input-group">
-            <label>How many central Switches are required?</label>
-            <input type="number" id="t2-switches" min="0">
+            <label>> Required Central Switches:</label>
+            <input type="number" id="t2-switches" min="0" placeholder="Enter integer...">
         </div>
         <div class="input-group">
-            <label>How many dedicated cables are needed?</label>
-            <input type="number" id="t2-cables" min="0">
+            <label>> Required Point-to-Point Uplinks:</label>
+            <input type="number" id="t2-cables" min="0" placeholder="Enter integer...">
         </div>
-        <button onclick="checkT2()">Check Configuration</button>
+        <button onclick="checkT2()">Execute Build</button>
         <div id="fb-t2" class="feedback"></div>
     </div>
 
     <!-- Task 3: Hybrid & Real-World Application -->
     <div class="task-container">
-        <h2>Task 3: Real-World Scenarios</h2>
-        <p class="question">Evaluate the following real-world requirements and select the topology that best fits the scenario.</p>
+        <h2>[MODULE 3] Architecture Decision Record (ADR)</h2>
+        <p class="question">Analyze the following deployment constraints and assign the optimal network topology architecture.</p>
         
         <div class="input-group">
-            <label>1. Factory sensors where heavy machinery blocks direct signal paths:</label>
+            <label>> SCENARIO 01: Industrial IoT deployment where RF attenuation (heavy machinery) disrupts direct line-of-sight.</label>
             <select id="t3-q1">
-                <option value="">-- Select Topology --</option>
-                <option value="star">Star Topology</option>
+                <option value="">-- Initialize Selection --</option>
+                <option value="star">Standard Star Topology</option>
                 <option value="mesh">Wireless Mesh</option>
                 <option value="hybrid">Wired Full Mesh</option>
             </select>
         </div>
         
         <div class="input-group">
-            <label>2. A multi-building site aiming to reduce the blast radius of a failure while balancing hardware costs:</label>
+            <label>> SCENARIO 02: Campus LAN requiring localized fault isolation (reduced blast radius) while scaling a highly available core.</label>
             <select id="t3-q2">
-                <option value="">-- Select Topology --</option>
-                <option value="star">Star Topology</option>
+                <option value="">-- Initialize Selection --</option>
+                <option value="star">Standard Star Topology</option>
                 <option value="mesh">Wired Full Mesh</option>
                 <option value="hybrid">Hybrid Topology</option>
             </select>
         </div>
 
-        <button onclick="checkT3()">Check Answers</button>
+        <button onclick="checkT3()">Validate ADR</button>
         <div id="fb-t3" class="feedback"></div>
     </div>
 
@@ -167,16 +225,16 @@
             let hints = [];
             
             if (isNaN(sw) || isNaN(cb)) {
-                showFeedback('fb-t1', false, "❌ Please enter a number in both fields.");
+                showFeedback('fb-t1', false, "<span class='terminal-prefix'>[ERROR]</span> SYNTAX_ERR: Integer input required.");
                 return;
             }
-            if (sw !== 1) hints.push("A Star topology connects devices to exactly 1 central switch.");
-            if (cb !== 6) hints.push("Remember the formula: 'n' cables for 'n' nodes.");
+            if (sw !== 1) hints.push("Edge star topologies aggregate traffic through exactly 1 central switch.");
+            if (cb !== 6) hints.push("Cable calculation failed. A star layout requires a 1:1 ratio (n links for n nodes).");
             
             if (hints.length === 0) {
-                showFeedback('fb-t1', true, "✅ Correct! 1 switch and 6 cables.");
+                showFeedback('fb-t1', true, "<span class='terminal-prefix'>[SUCCESS]</span> Hardware provisioned: 1 Switch, 6 Links active.");
             } else {
-                showFeedback('fb-t1', false, "❌ Incorrect. <br><br>💡 <strong>Hints:</strong><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t1', false, "<span class='terminal-prefix'>[FAIL]</span> Provisioning denied. <br><br>DIAGNOSTICS:<br>> " + hints.join("<br>> "));
             }
         }
 
@@ -186,16 +244,16 @@
             let hints = [];
             
             if (isNaN(sw) || isNaN(cb)) {
-                showFeedback('fb-t2', false, "❌ Please enter a number in both fields.");
+                showFeedback('fb-t2', false, "<span class='terminal-prefix'>[ERROR]</span> SYNTAX_ERR: Integer input required.");
                 return;
             }
-            if (sw !== 0) hints.push("A Full Mesh connects nodes directly to each other; it does NOT use a central switch.");
-            if (cb !== 15) hints.push("Use the formula for a full mesh: n(n-1) / 2. For 6 nodes: (6 × 5) / 2.");
+            if (sw !== 0) hints.push("A true mesh utilizes decentralized direct routing. Central switches are bypassed.");
+            if (cb !== 15) hints.push("Link calculation failed. Execute formula: n(n-1)/2. (6 nodes * 5) / 2.");
             
             if (hints.length === 0) {
-                showFeedback('fb-t2', true, "✅ Correct! 0 switches and 15 cables.");
+                showFeedback('fb-t2', true, "<span class='terminal-prefix'>[SUCCESS]</span> Backbone provisioned: 0 Central Switches, 15 Direct Uplinks active.");
             } else {
-                showFeedback('fb-t2', false, "❌ Incorrect. <br><br>💡 <strong>Hints:</strong><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t2', false, "<span class='terminal-prefix'>[FAIL]</span> Provisioning denied. <br><br>DIAGNOSTICS:<br>> " + hints.join("<br>> "));
             }
         }
 
@@ -205,16 +263,16 @@
             let hints = [];
 
             if (q1 === '' || q2 === '') {
-                showFeedback('fb-t3', false, "❌ Please answer both questions.");
+                showFeedback('fb-t3', false, "<span class='terminal-prefix'>[ERROR]</span> INCOMPLETE_ADR: All scenarios must be resolved.");
                 return;
             }
-            if (q1 !== 'mesh') hints.push("Scenario 1: Nodes need to hop data around physical obstacles because there is no single direct path.");
-            if (q2 !== 'hybrid') hints.push("Scenario 2: Combining a meshed core with star segments reduces blast radius while scaling efficiently.");
+            if (q1 !== 'mesh') hints.push("Scenario 01: Multi-hop wireless routing is required to bypass physical interference.");
+            if (q2 !== 'hybrid') hints.push("Scenario 02: Combining a meshed core with star edge segments isolates faults and scales efficiently.");
 
             if (hints.length === 0) {
-                showFeedback('fb-t3', true, "✅ Correct! Wireless Mesh allows routing around obstacles, and Hybrid optimizes cost and reliability.");
+                showFeedback('fb-t3', true, "<span class='terminal-prefix'>[SUCCESS]</span> Architecture Decision Record validated. Optimal typologies selected.");
             } else {
-                showFeedback('fb-t3', false, "❌ Not quite right. <br><br>💡 <strong>Hints:</strong><br>• " + hints.join("<br>• "));
+                showFeedback('fb-t3', false, "<span class='terminal-prefix'>[FAIL]</span> Architectural review rejected. <br><br>DIAGNOSTICS:<br>> " + hints.join("<br>> "));
             }
         }
     </script>
